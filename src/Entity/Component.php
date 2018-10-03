@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,11 +17,6 @@ class Component
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $idcreative;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -51,21 +48,37 @@ class Component
      */
     private $high;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Creative", inversedBy="component")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $creative;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Text", mappedBy="component")
+     */
+    private $text;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="component")
+     */
+    private $image;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="component")
+     */
+    private $video;
+
+    public function __construct()
+    {
+        $this->text = new ArrayCollection();
+        $this->image = new ArrayCollection();
+        $this->video = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdcreative(): ?int
-    {
-        return $this->idcreative;
-    }
-
-    public function setIdcreative(int $idcreative): self
-    {
-        $this->idcreative = $idcreative;
-
-        return $this;
     }
 
     public function getName(): ?string
@@ -136,6 +149,111 @@ class Component
     public function setHigh(int $high): self
     {
         $this->high = $high;
+
+        return $this;
+    }
+
+    public function getCreative(): ?Creative
+    {
+        return $this->creative;
+    }
+
+    public function setCreative(?Creative $creative): self
+    {
+        $this->creative = $creative;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Text[]
+     */
+    public function getText(): Collection
+    {
+        return $this->text;
+    }
+
+    public function addText(Text $text): self
+    {
+        if (!$this->text->contains($text)) {
+            $this->text[] = $text;
+            $text->setComponent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeText(Text $text): self
+    {
+        if ($this->text->contains($text)) {
+            $this->text->removeElement($text);
+            // set the owning side to null (unless already changed)
+            if ($text->getComponent() === $this) {
+                $text->setComponent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImage(): Collection
+    {
+        return $this->image;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->image->contains($image)) {
+            $this->image[] = $image;
+            $image->setComponent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->image->contains($image)) {
+            $this->image->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getComponent() === $this) {
+                $image->setComponent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Video[]
+     */
+    public function getVideo(): Collection
+    {
+        return $this->video;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->video->contains($video)) {
+            $this->video[] = $video;
+            $video->setComponent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->video->contains($video)) {
+            $this->video->removeElement($video);
+            // set the owning side to null (unless already changed)
+            if ($video->getComponent() === $this) {
+                $video->setComponent(null);
+            }
+        }
 
         return $this;
     }

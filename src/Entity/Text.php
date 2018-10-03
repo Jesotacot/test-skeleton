@@ -17,30 +17,19 @@ class Text
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $idcomponent;
-
-    /**
      * @ORM\Column(type="string", length=140)
      */
     private $content;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Component", inversedBy="text")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $component;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdcomponent(): ?int
-    {
-        return $this->idcomponent;
-    }
-
-    public function setIdcomponent(int $idcomponent): self
-    {
-        $this->idcomponent = $idcomponent;
-
-        return $this;
     }
 
     public function getContent(): ?string
@@ -51,6 +40,18 @@ class Text
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getComponent(): ?Component
+    {
+        return $this->component;
+    }
+
+    public function setComponent(?Component $component): self
+    {
+        $this->component = $component;
 
         return $this;
     }

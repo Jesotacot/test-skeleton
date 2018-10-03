@@ -17,11 +17,6 @@ class Image
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $idcomponent;
-
-    /**
      * @ORM\Column(type="string", length=2083)
      */
     private $url;
@@ -36,21 +31,15 @@ class Image
      */
     private $weight;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Component", inversedBy="image")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $component;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdcomponent(): ?int
-    {
-        return $this->idcomponent;
-    }
-
-    public function setIdcomponent(int $idcomponent): self
-    {
-        $this->idcomponent = $idcomponent;
-
-        return $this;
     }
 
     public function getUrl(): ?string
@@ -85,6 +74,18 @@ class Image
     public function setWeight(int $weight): self
     {
         $this->weight = $weight;
+
+        return $this;
+    }
+
+    public function getComponent(): ?Component
+    {
+        return $this->component;
+    }
+
+    public function setComponent(?Component $component): self
+    {
+        $this->component = $component;
 
         return $this;
     }
