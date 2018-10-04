@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,6 +19,13 @@ class Text
 
     /**
      * @ORM\Column(type="string", length=140)
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 140,
+     *      minMessage = "Your content must have at least 1 characters",
+     *      maxMessage = "Your content can not be greater than 140 characters"
+     * )
+     *  @Assert\NotBlank
      */
     private $content;
 

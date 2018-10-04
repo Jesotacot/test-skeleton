@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,33 +21,65 @@ class Component
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 255,
+     *      minMessage = "Your name must have at least 1 character",
+     *      maxMessage = "Your name can not be greater than 255 characters"
+     * )
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value posx is not valid integer"
+     * )
      */
     private $posx;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value posy is not valid integer"
+     * )
      */
     private $posy;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value posz is not valid integer"
+     * )
      */
     private $posz;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value width is not valid integer"
+     * )
      */
     private $width;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value height is not valid integer"
+     * )
      */
-    private $high;
+    private $height;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Creative", inversedBy="component")
@@ -55,17 +88,17 @@ class Component
     private $creative;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Text", mappedBy="component")
+     * @ORM\OneToMany(targetEntity="App\Entity\Text", mappedBy="component",cascade={"persist", "remove"})
      */
     private $text;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="component")
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="component",cascade={"persist", "remove"})
      */
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="component")
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="component",cascade={"persist", "remove"})
      */
     private $video;
 
@@ -141,14 +174,14 @@ class Component
         return $this;
     }
 
-    public function getHigh(): ?int
+    public function getHeight(): ?int
     {
-        return $this->high;
+        return $this->height;
     }
 
-    public function setHigh(int $high): self
+    public function setHeight(int $height): self
     {
-        $this->high = $high;
+        $this->height = $height;
 
         return $this;
     }

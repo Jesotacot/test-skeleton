@@ -8,14 +8,14 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20181003075254 extends AbstractMigration
+final class Version20181004103322 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE component (id INT AUTO_INCREMENT NOT NULL, creative_id INT NOT NULL, name VARCHAR(255) NOT NULL, posx INT NOT NULL, posy INT NOT NULL, posz INT NOT NULL, width INT NOT NULL, high INT NOT NULL, INDEX IDX_49FEA1578E0ED468 (creative_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE component (id INT AUTO_INCREMENT NOT NULL, creative_id INT NOT NULL, name VARCHAR(255) NOT NULL, posx INT NOT NULL, posy INT NOT NULL, posz INT NOT NULL, width INT NOT NULL, height INT NOT NULL, INDEX IDX_49FEA1578E0ED468 (creative_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE creative (id INT AUTO_INCREMENT NOT NULL, state VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE image (id INT AUTO_INCREMENT NOT NULL, component_id INT NOT NULL, url VARCHAR(2083) NOT NULL, format VARCHAR(255) NOT NULL, weight INT NOT NULL, INDEX IDX_C53D045FE2ABAFFF (component_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE text (id INT AUTO_INCREMENT NOT NULL, component_id INT NOT NULL, content VARCHAR(140) NOT NULL, INDEX IDX_3B8BA7C7E2ABAFFF (component_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');

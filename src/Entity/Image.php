@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,16 +19,32 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=2083)
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 2083,
+     *      minMessage = "Your url must have at least 1 character",
+     *      maxMessage = "Your url can not be greater than 2083 characters"
+     * )
+     * @Assert\NotBlank()
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Choice(
+     *        choices = {"JPG", "PNG"},
+     *        message = "Choose a valid format [JPG,PNG]"
+     * )
      */
     private $format;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value weight is not valid integer"
+     * )
      */
     private $weight;
 
